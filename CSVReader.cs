@@ -25,14 +25,16 @@ public class CSVReader : MonoBehaviour
 
     public const char DELIMITER = ','; // CSV 파일에서 사용하는 구분자 (기본값은 콤마)
 
+    // csv 파일의 정보를 행과 열로 구분하여 저장할 딕셔너리
+    // 행은 키 값이 되고, 열은 키 값 내부의 값이 된다.
+    public Dictionary<string, List<string>> dataDictionary = default;
+
     // CSV 파일을 읽는 함수
     // dirPath에는 "Assets/Resources/ZombieDatas"과 같이 디렉토리 경로를 입력한다.
     // csvFileName에는 "ZombieSurvivalDatas.csv"과 같이 csv 파일의 이름을 입력한다.
-    public Dictionary<string, List<string>> ReadCSVFile(string dirPath, string csvFileName)
+    public void ReadCSVFile(string dirPath, string csvFileName)
     {
-        // csv 파일의 정보를 행과 열로 구분하여 저장할 딕셔너리
-        // 행은 키 값이 되고, 열은 키 값 내부의 값이 된다.
-        Dictionary<string, List<string>> dataDictionary = new Dictionary<string, List<string>>();
+        dataDictionary = new Dictionary<string, List<string>>();
         string filePath = Path.Combine(dirPath, csvFileName);
         try
         {
@@ -56,14 +58,12 @@ public class CSVReader : MonoBehaviour
                     }
                 }
             }
-            return dataDictionary;
         }
 
         // csv 파일에 문제가 있을 경우 오류 메시지 출력
         catch (IOException e)
         {
             Debug.LogError("Error reading the CSV file: " + e.Message);
-            return null;
         }
     }
 
