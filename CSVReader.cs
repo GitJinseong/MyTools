@@ -68,6 +68,7 @@ public class CSVReader : MonoBehaviour
     }
 
     // 변환된 csv 파일의 정보가 저장된 딕셔너리 내부의 값을 출력하는 함수.
+    // "행:열1,열2,열3"과 같이 출력된다.
     private void PrintData()
     {
         // 딕셔너리의 각 항목을 출력
