@@ -32,7 +32,7 @@ public class CSVReader : MonoBehaviour
     // CSV 파일을 읽는 함수
     // dirPath에는 "Assets/Resources/ZombieDatas"과 같이 디렉토리 경로를 입력한다.
     // csvFileName에는 "ZombieSurvivalDatas.csv"과 같이 csv 파일의 이름을 입력한다.
-    public void ReadCSVFile(string dirPath, string csvFileName)
+    public Dictionary<string, List<string>> ReadCSVFile(string dirPath, string csvFileName)
     {
         dataDictionary = new Dictionary<string, List<string>>();
         string filePath = Path.Combine(dirPath, csvFileName);
@@ -58,21 +58,24 @@ public class CSVReader : MonoBehaviour
                     }
                 }
             }
+            return dataDictionary;
         }
 
         // csv 파일에 문제가 있을 경우 오류 메시지 출력
         catch (IOException e)
         {
             Debug.LogError("Error reading the CSV file: " + e.Message);
+            return default;
         }
     }
 
     // 변환된 csv 파일의 정보가 저장된 딕셔너리 내부의 값을 출력하는 함수.
     // "행:열1,열2,열3"과 같이 출력된다.
-    private void PrintData()
+    // 매개 변수로 받을 딕셔너리의 구조는 <string, List<string>> 이어야 한다.
+    private void PrintData(Dictionary<string, List<string>> dictionary)
     {
         // 딕셔너리의 각 항목을 출력
-        foreach (KeyValuePair<string, List<string>> entry in dataDictionary)
+        foreach (KeyValuePair<string, List<string>> entry in dictionary)
         {
             string category = entry.Key;
             List<string> values = entry.Value;
